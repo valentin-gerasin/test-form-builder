@@ -1,0 +1,24 @@
+<div class="review">
+  <h2 class="review__title">Questions Answers</h2>
+
+  <div class="review__list">
+    <div class="list__item" *ngFor="let item of questions$ | async">
+      <p class="item__question">{{ item.question }}</p>
+
+      <ul class="item__answers">
+        <li *ngFor="let answer of item?.answers" class="answers__answer">
+          {{ answer }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <button
+    class="review__btn"
+    mat-raised-button
+    color="accent"
+    (click)="navigateToDashboard()"
+  >
+    Back to questions
+  </button>
+</div>

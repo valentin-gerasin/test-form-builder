@@ -1,0 +1,38 @@
+<div class="dashboard" [formGroup]="questionsForm">
+  <h1 class="dashboard__title">Quiz Builder</h1>
+
+  <div class="dashboard__action">
+    <button
+      class="action__btn"
+      mat-raised-button
+      color="primary"
+      (click)="openCreateDialog()"
+    >
+      Add new question
+    </button>
+  </div>
+
+  <div class="dashboard__list">
+    <div
+      class="list__item"
+      formArrayName="questions"
+      *ngFor="let item of optionsArray.controls; let i = index"
+    >
+      <app-question
+        [formControlName]="i"
+        class="item__question"
+        [question]="item.value"
+      ></app-question>
+    </div>
+  </div>
+
+  <button
+    *ngIf="(questions$ | async).length"
+    class="dashboard__btn"
+    mat-raised-button
+    color="accent"
+    (click)="showAnswers()"
+  >
+    Show answers
+  </button>
+</div>

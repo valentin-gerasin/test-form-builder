@@ -1,0 +1,22 @@
+<div class="question-block" [formGroup]="questionForm">
+  <p class="question-block__question">{{ question.question }}</p>
+
+  <ng-container
+    *ngIf="question.type === EQuestionType.CHECK_LIST"
+    formArrayName="checkBoxes"
+  >
+    <ng-container
+      *ngFor="let item of optionsArray.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <mat-checkbox formControlName="state">{{ item.value.name }}</mat-checkbox>
+    </ng-container>
+  </ng-container>
+
+  <mat-form-field
+    *ngIf="question.type === EQuestionType.PARAGRAPH || question.custom"
+  >
+    <mat-label>Answer question</mat-label>
+    <input matInput type="text" formControlName="input" />
+  </mat-form-field>
+</div>

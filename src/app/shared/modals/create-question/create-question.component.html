@@ -1,0 +1,74 @@
+<div class="create-question" [formGroup]="questionForm">
+  <div class="create-question__header">
+    <h2 class="header__title">Add a new Question!</h2>
+  </div>
+
+  <div class="create-question__type">
+    <mat-radio-group aria-label="Select an option" formControlName="type">
+      <mat-radio-button [value]="EQuestionType.PARAGRAPH"
+        >Paragraph</mat-radio-button
+      >
+      <mat-radio-button [value]="EQuestionType.CHECK_LIST"
+        >Check list</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="create-question__body">
+    <div class="body__item">
+      <mat-form-field class="example-form-field">
+        <mat-label>Your question</mat-label>
+        <input matInput type="text" formControlName="question" />
+      </mat-form-field>
+    </div>
+
+    <div class="body__item">
+      <button
+        class="item__btn"
+        mat-raised-button
+        *ngIf="
+          questionType === EQuestionType.CHECK_LIST &&
+          optionsArray.controls.length < 5
+        "
+        (click)="addOption()"
+      >
+        Add option
+      </button>
+    </div>
+
+    <div class="body__item" formArrayName="options">
+      <mat-form-field *ngFor="let item of optionsArray.controls; let i = index">
+        <mat-label>Answer Option</mat-label>
+        <input matInput type="text" [formControlName]="i" />
+      </mat-form-field>
+    </div>
+
+    <div class="body__item">
+      <mat-checkbox formControlName="required">
+        Is this field required?</mat-checkbox
+      >
+
+      <mat-checkbox
+        *ngIf="questionType === EQuestionType.CHECK_LIST"
+        formControlName="custom"
+        >Is allowed to add custom answer?</mat-checkbox
+      >
+    </div>
+  </div>
+
+  <div class="create-question__footer">
+    <button class="footer__btn" mat-raised-button (click)="closeDialog()">
+      Close
+    </button>
+
+    <button
+      [disabled]="!questionForm.valid"
+      class="footer__btn"
+      color="primary"
+      mat-raised-button
+      (click)="createQuestion()"
+    >
+      Submit
+    </button>
+  </div>
+</div>
